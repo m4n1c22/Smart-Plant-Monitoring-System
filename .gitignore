@@ -7,7 +7,9 @@
 *.o
 *.so
 *.aux
- 
+*.js~
+*.pdf~
+*.java~
 
 # Logs and databases #
 ######################

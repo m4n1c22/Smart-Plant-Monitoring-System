@@ -1000,7 +1000,7 @@ Parse.Cloud.job("weatherPredictionJob", function(request, status) {
 
 /**Testing purposes...*/
  
-Parse.Cloud.define("hello", function(request, response) {
-  response.success(new Date());
+Parse.Cloud.define("Ping", function(request, response) {
+  response.success("Successful Ping");
 });
 
