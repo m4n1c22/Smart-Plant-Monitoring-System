@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Christoph\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="C:\Users\Christoph\AndroidStudioProjects\Android\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-72a4600ae86e9f9784fd050b6e17479a3ae4dffa.jar" />
+    </item>
+    <item
+        jar="C:\Users\Christoph\AndroidStudioProjects\Android\app\libs\Parse-1.4.3.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8daf146aea8cd5245bb90f802f2cd4b8dd855eca">
+        <dex dex="C:\Users\Christoph\AndroidStudioProjects\Android\app\build\intermediates\pre-dexed\debug\Parse-1.4.3-70c5d1cf26dced3460d5d495a2bddbf65731b356.jar" />
+    </item>
+
+</items>

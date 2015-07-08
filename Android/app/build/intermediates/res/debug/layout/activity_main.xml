@@ -1,0 +1,268 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+ 	android:orientation="vertical" 
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relationLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Weather"
+            android:id="@+id/textView2"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Today"
+            android:id="@+id/today"
+            android:layout_alignTop="@+id/tomorrow"
+            android:layout_toLeftOf="@+id/textView2"
+            android:layout_marginRight="32dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Tomorrow"
+            android:id="@+id/tomorrow"
+            android:layout_marginTop="29dp"
+            android:layout_below="@+id/textView2"
+            android:layout_toRightOf="@+id/textView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Temp:"
+            android:id="@+id/todayTemp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/today"
+            android:layout_toLeftOf="@+id/today" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0"
+            android:id="@+id/todayTempValue"
+            android:layout_alignTop="@+id/todayTemp"
+            android:layout_marginLeft="100dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Humidity:"
+            android:id="@+id/todayHumidity"
+            android:layout_below="@+id/todayTemp"
+            android:layout_alignLeft="@+id/todayTemp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0"
+            android:id="@+id/todayHumidityValue"
+            android:layout_alignTop="@+id/todayHumidity"
+            android:layout_marginLeft="100dp"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Pressure:"
+            android:id="@+id/todayPressure"
+            android:layout_below="@+id/todayHumidity"
+            android:layout_alignLeft="@+id/todayHumidity" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0"
+            android:id="@+id/todayPressureValue"
+            android:layout_below="@+id/todayHumidity"
+            android:layout_marginLeft="100dp"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Status:"
+            android:id="@+id/todayStatus"
+            android:layout_below="@+id/todayPressure"
+            android:layout_alignLeft="@+id/todayPressure" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/todayStatusValue"
+            android:layout_alignTop="@+id/todayStatus"
+            android:layout_marginLeft="100dp"
+            android:text="none" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Temp:"
+            android:id="@+id/tomorrowTemp"
+            android:layout_alignTop="@+id/todayTempValue"
+            android:layout_toRightOf="@+id/textView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Humidity"
+            android:id="@+id/tomorrowHumidity"
+            android:layout_below="@+id/tomorrowTemp"
+            android:layout_alignLeft="@+id/tomorrowTemp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Pressure:"
+            android:id="@+id/tomorrowPressure"
+            android:layout_below="@+id/tomorrowHumidity"
+            android:layout_alignLeft="@+id/tomorrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Status:"
+            android:id="@+id/tomorrowStatus"
+            android:layout_alignTop="@+id/todayStatusValue"
+            android:layout_alignLeft="@+id/tomorrowHumidity" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0"
+            android:id="@+id/tomorrowHumidityValue"
+            android:layout_below="@+id/tomorrowTemp"
+            android:layout_toRightOf="@+id/tomorrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0"
+            android:id="@+id/tomorrowTempValue"
+            android:layout_above="@+id/tomorrowHumidityValue"
+            android:layout_alignLeft="@+id/tomorrowHumidityValue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0"
+            android:id="@+id/tomorrowPressureValue"
+            android:layout_below="@+id/tomorrowHumidityValue"
+            android:layout_alignLeft="@+id/tomorrowHumidityValue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="none"
+            android:id="@+id/tomorrowStatusValue"
+            android:layout_alignTop="@+id/tomorrowStatus"
+            android:layout_alignLeft="@+id/tomorrowPressureValue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Last Watered"
+            android:id="@+id/lastWatered"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/todayStatusValue"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="none    oj po"
+            android:id="@+id/lastWateredValue"
+            android:layout_below="@+id/lastWatered"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Status"
+            android:id="@+id/status"
+            android:layout_below="@+id/lastWateredValue"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Light is off"
+            android:id="@+id/statusLight"
+            android:layout_below="@+id/status"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Water is off"
+            android:id="@+id/statusWater"
+            android:layout_below="@+id/statusLight"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Override"
+            android:id="@+id/textView"
+            android:layout_below="@+id/statusWater"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="44dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Water now"
+            android:id="@+id/button"
+            android:layout_below="@+id/textView"
+            android:layout_toLeftOf="@+id/textView"
+            android:onClick="overrideWater"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Light now"
+            android:id="@+id/button2"
+            android:layout_below="@+id/textView"
+            android:layout_toRightOf="@+id/statusLight"
+            android:onClick="overrideLight" />
+
+    </RelativeLayout>
+
+</LinearLayout><!-- From: file:/C:/Users/Christoph/AndroidStudioProjects/Android/app/src/main/res/layout/activity_main.xml -->
