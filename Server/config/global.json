@@ -1,0 +1,17 @@
+{
+  "global": {
+    "parseVersion": "1.4.2"
+  },
+  "applications": {
+    "TK3": {
+      "applicationId": "A1mhNBAj92MCA2vvLgWs9d1iGudjvTLt72PNWuo8",
+      "masterKey": "31bY9o9snFlp6UNMNtJKqJuHNoTTBgWCJu9SEHav"
+    },
+    "TK3CloudCode": {
+      "link": "TK3"
+    },
+    "_default": {
+      "link": "TK3"
+    }
+  }
+}
