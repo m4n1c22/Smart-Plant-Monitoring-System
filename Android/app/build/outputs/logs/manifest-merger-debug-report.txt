@@ -1,0 +1,133 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
+	package
+		ADDED from AndroidManifest.xml:3:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionName
+		ADDED from AndroidManifest.xml:5:5
+	android:versionCode
+		ADDED from AndroidManifest.xml:4:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-sdk
+ADDED from AndroidManifest.xml:7:5
+	android:targetSdkVersion
+		ADDED from AndroidManifest.xml:9:9
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		ADDED from AndroidManifest.xml:8:9
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:11:2
+	android:name
+		ADDED from AndroidManifest.xml:11:19
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:12:2
+	android:name
+		ADDED from AndroidManifest.xml:12:19
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from AndroidManifest.xml:13:2
+	android:name
+		ADDED from AndroidManifest.xml:13:19
+uses-permission#android.permission.VIBRATE
+ADDED from AndroidManifest.xml:14:2
+	android:name
+		ADDED from AndroidManifest.xml:14:19
+uses-permission#android.permission.WAKE_LOCK
+ADDED from AndroidManifest.xml:15:2
+	android:name
+		ADDED from AndroidManifest.xml:15:19
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from AndroidManifest.xml:16:2
+	android:name
+		ADDED from AndroidManifest.xml:16:19
+uses-permission#com.google.android.c2dm.permission.RECEIVE
+ADDED from AndroidManifest.xml:17:2
+	android:name
+		ADDED from AndroidManifest.xml:17:19
+permission#com.parse.tutorials.pushnotifications.permission.C2D_MESSAGE
+ADDED from AndroidManifest.xml:24:2
+	android:protectionLevel
+		ADDED from AndroidManifest.xml:25:3
+	android:name
+		ADDED from AndroidManifest.xml:24:14
+uses-permission#com.parse.tutorials.pushnotifications.permission.C2D_MESSAGE
+ADDED from AndroidManifest.xml:26:2
+	android:name
+		ADDED from AndroidManifest.xml:26:19
+application
+ADDED from AndroidManifest.xml:28:5
+	android:label
+		ADDED from AndroidManifest.xml:32:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:30:9
+	android:icon
+		ADDED from AndroidManifest.xml:31:9
+	android:theme
+		ADDED from AndroidManifest.xml:33:9
+	android:name
+		ADDED from AndroidManifest.xml:29:2
+activity#com.parse.tutorials.pushnotifications.MainActivity
+ADDED from AndroidManifest.xml:34:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:37:4
+	android:label
+		ADDED from AndroidManifest.xml:36:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:38:4
+	android:name
+		ADDED from AndroidManifest.xml:35:13
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:39:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:40:17
+	android:name
+		ADDED from AndroidManifest.xml:40:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:42:17
+	android:name
+		ADDED from AndroidManifest.xml:42:27
+service#com.parse.PushService
+ADDED from AndroidManifest.xml:46:9
+	android:name
+		ADDED from AndroidManifest.xml:46:18
+receiver#com.parse.ParseBroadcastReceiver
+ADDED from AndroidManifest.xml:47:3
+	android:name
+		ADDED from AndroidManifest.xml:47:13
+intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.USER_PRESENT
+ADDED from AndroidManifest.xml:48:4
+action#android.intent.action.BOOT_COMPLETED
+ADDED from AndroidManifest.xml:49:5
+	android:name
+		ADDED from AndroidManifest.xml:49:13
+action#android.intent.action.USER_PRESENT
+ADDED from AndroidManifest.xml:50:5
+	android:name
+		ADDED from AndroidManifest.xml:50:13
+receiver#com.parse.GcmBroadcastReceiver
+ADDED from AndroidManifest.xml:53:3
+	android:permission
+		ADDED from AndroidManifest.xml:54:4
+	android:name
+		ADDED from AndroidManifest.xml:53:13
+intent-filter#com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION+com.parse.tutorials.pushnotifications
+ADDED from AndroidManifest.xml:55:4
+action#com.google.android.c2dm.intent.RECEIVE
+ADDED from AndroidManifest.xml:56:5
+	android:name
+		ADDED from AndroidManifest.xml:56:13
+action#com.google.android.c2dm.intent.REGISTRATION
+ADDED from AndroidManifest.xml:57:5
+	android:name
+		ADDED from AndroidManifest.xml:57:13
+category#com.parse.tutorials.pushnotifications
+ADDED from AndroidManifest.xml:64:5
+	android:name
+		ADDED from AndroidManifest.xml:64:15
