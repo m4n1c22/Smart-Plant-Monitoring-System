@@ -68,7 +68,7 @@ The system feasibility was verified in a simple star topology setup in a tomato 
 The sensors used were SHT75 humidity/temperature sensor and TSL262R light irradiance sensor, and Figaro’s TGS4161 CO2 sensor used. 
 Application of the concept in the greenhouse: temperature, luminosity and humidity sensors measured climate variables and communicated directly with the gateway node. 
 The gateway node acted as a coordinator and received the measured data from the sensor nodes. 
-The maximal communication range, 15 meters was figured out in individual test where the distance between the coordinator and the sensor node inside the greenhouse dense flora was increased,the reliable communication range fell to one third in the greenhouse’s dense flora. 
+The maximal communication range, 15 meters was figured out in individual test where the distance between the coordinator and the sensor node inside the greenhouse dense flora was increased,the reliable communication range fell to one third in the greenhouse's dense flora. 
 
 \section*{Design}
 
@@ -191,6 +191,7 @@ The time slot mechanism is handled based on the time provided by the device.
 \end{algorithmic}
 \end{algorithm} 
 
+
 \subsection*{User Based Curation}
 
 The user based curation is hand held by the user using the Android/iOS devices. 
@@ -207,6 +208,27 @@ The system performs a polling service from monitoring hardware.
 The Gadgeteer polls the server to see if there is any new event waiting for the Gadgeteer to service upon.
 If it finds the servicing, then it handles the change and performs a update device status API call to the server. 
 Thereby, triggering a push to the user's mobile device.
+
+\subsection*{Working with Modes}
+
+The Gadgeteer initially sets itself in \emph{``Advanced''} mode and later on changes to \emph{``Direct''} mode based on the correctness of the forecast.
+When the forecast fails the gadgeteer retracts itself to \emph{``Direct''} mode. 
+For more info refer Algorithm~\ref{ModeChangeoverAlgo}.
+
+\begin{algorithm}
+\caption{Mode Change Over}          % give the algorithm a caption
+\label{ModeChangeoverAlgo}      
+\begin{algorithmic}
+\\
+\State $mode \gets ``Advanced''$
+\If {$forecast$ is $success$}
+    \State $return \gets``No mode change needed''$
+\Else
+    \State $mode \gets ``Direct''$ until next time slot
+\EndIf
+\end{algorithmic}
+\end{algorithm} 
+
 
 \section*{Evaluation}
 

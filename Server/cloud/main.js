@@ -332,7 +332,7 @@ Parse.Cloud.define("weatherStatusForDevice", function(request, response) {
                       If Gadgeteer,
                       {"DeviceID":<deviceid>,"Rain":true}
                       If Android/iOS/Windows,
-                      {"ExtDeviceID":<devicetoken,"Weather":"Clear Sky"}
+                      {"ExtDeviceID":<devicetoken,"Weather":"Clear Sky","Temperature":<temp>,"Pressure":<pressure>,"Humidity":<humidity>}
 */
 Parse.Cloud.define("weatherForecastForDevice", function(request, response) {
    
@@ -443,8 +443,11 @@ Parse.Cloud.define("weatherForecastForDevice", function(request, response) {
                               success: function (httpResponse) {
 
                                 console.log(httpResponse.text);
-                                var rain=0,clear=0,cloud=0,weatherPrediction;
+                                var rain=0,clear=0,cloud=0,weatherPrediction,temp=0,pressure=0,humidity=0;
                                 for(var i=0;i<8;i++) {
+                                	temp+=httpResponse.data.list[i].main.temp;
+                                	pressure+=httpResponse.data.list[i].main.pressure;
+                                	humidity+=httpResponse.data.list[i].main.humidity;
                                   if(httpResponse.data.list[i].weather[0].main === "Rain") {
                                     rain++;          
                                   }
@@ -455,6 +458,9 @@ Parse.Cloud.define("weatherForecastForDevice", function(request, response) {
                                     cloud++;                                        
                                   }
                                 }
+                                temp /=8;
+                                pressure /=8;
+                                humidity /=8;
                                 if(rain===0) {
                                     if(cloud/8 >= 0.8) {
                                       weatherPrediction = "Mostly Cloudy";
@@ -477,7 +483,7 @@ Parse.Cloud.define("weatherForecastForDevice", function(request, response) {
                                       weatherPrediction = "Overcast with Occasional Rain";
                                     } 
                                 }
-                                var predictionJSON = {"ExtDeviceID":request.params.ExtDeviceID,"Weather":weatherPrediction}; 
+                                var predictionJSON = {"ExtDeviceID":request.params.ExtDeviceID,"Weather":weatherPrediction,"Temperature":temp,"Pressure":pressure,"Humidity":humidity}; 
                                 //var predictionJSON = {"DeviceID":request.params.DeviceID,"Forecast":httpResponse.data.list.slice(0,8)};
                                 JSON.stringify(predictionJSON);
                                 response.success(predictionJSON);
@@ -1000,7 +1006,7 @@ Parse.Cloud.job("weatherPredictionJob", function(request, status) {
 
 /**Testing purposes...*/
  
-Parse.Cloud.define("Ping", function(request, response) {
-  response.success("Successful Ping");
+Parse.Cloud.define("hello", function(request, response) {
+  response.success("Hello...");
 });
 
