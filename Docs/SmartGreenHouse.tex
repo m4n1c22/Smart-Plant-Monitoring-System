@@ -5,6 +5,9 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
 
 \begin{document}
 \title{\textbf{Smart Plant Monitoring System}}
@@ -21,7 +24,16 @@ Technische Universität Darmstadt\\
 \textbf{\abstractname{
 \emph {\textbf{\\
 %ADD the abstract here...
-Plant monitoring is seen as one of the most important tasks in any farming or agriculture based environment. With the inception of Ambient Intelligent systems, there have been a rise in ambient intelligent based devices - Smart Homes\cite{ref001} and other similar technologies involving RFID has evolved over the past few years\cite{ref002}. Integration of such an ambient intelligent system with plant monitoring makes farming easier. In this paper, we discuss about the implementation of a smart plant monitoring system which makes use of the concept ambient intelligence with the use of .Net Gadgeteer which, proactively handles the plant monitoring system. The given implementation works along with a cloud based server and a mobile based device (ideally Android/iOS device) which helps the user to control and see the status of the plant which is being monitored by the hardware device. The given circuitry detects changes in the moisture, temperature and light conditions in and around the plant, and performs a machine based curation on the plant by providing necessary irrigation and illumination for the plant. Machine curation is also integrated with active weather forecasting systems which are deployed in the cloud based server using which advanced machine curation is performed. For user based curation, the Android device provides user an option to override a machine curated operation. %conclusion statement to be added...
+Plant monitoring is seen as one of the most important tasks in any farming or
+agriculture based environment. 
+With the inception of Ambient Intelligent
+systems, there have been a rise in ambient intelligent based devices - Smart Homes\cite{ref001} and other similar technologies involving RFID has evolved over the past few years\cite{ref002}. 
+Integration of such an ambient intelligent system with plant monitoring makes farming easier. 
+In this paper, we discuss about the implementation of a smart plant monitoring system which makes use of the concept ambient intelligence with the use of .Net Gadgeteer which, proactively handles the plant monitoring system. 
+The given implementation works along with a cloud based server and a mobile based device (ideally Android/iOS device) which helps the user to control and see the status of the plant which is being monitored by the hardware device. 
+The given circuitry detects changes in the moisture, temperature and light conditions in and around the plant, and performs a machine based curation on the plant by providing necessary irrigation and illumination for the plant. 
+Machine curation is also integrated with active weather forecasting systems which are deployed in the cloud based server using which advanced machine curation is performed. 
+For user based curation, the Android device provides user an option to override a machine curated operation. %conclusion statement to be added...
 }}}}
 
 \section*{Motivation}
@@ -36,14 +48,140 @@ Plant monitoring is seen as one of the most important tasks in any farming or ag
 \section*{Design}
 
 %Add design here...
-The proposed system consists of two curation systems. The first one being the \emph{machine based curation} and other being the \emph{user based curation}. These curative systems are in place to provide a smart and involuntary feedback to the given environment. The former is more of predictive system devised on a hardware whereas, the latter is for the user to actively handle the response provided by hardware. The curation handled by the device are based on the sensor information it receives from its end points(\emph{sensory hardware units}), such a curation is called as \emph{``Direct Machine Based Curation''}. There is also a hybrid machine based curation provided by the device and the cloud server which relies on the Weather Forecast information with the collects sensor values from the endpoints, such a curation can be called as \emph{``Advanced Machine Based Curation''}. If the user wants to take over the system then, it becomes more of a \emph{``User Based Curation''}. On top of all, the proposed system design is a pub-sub system. The Monitoring hardware is the publisher and Mobile based devices are subscribers. The cloud based server act as \emph{``brokers''}. Before any curation to work the device must initially register to the cloud server by their respective device tokens thereby, the broker service can later on perform push services. For handling the registration operation, the server have provided two different registration APIs --- one for the Android/iOS/Windows device using which mobile device can register itself and also subscribe to a particular monitoring device. And the other for the Monitoring hardware device in order for registering to server with its Geo-Location.
+The proposed system consists of two curation systems. 
+The first one being the \emph{machine based curation} and other being the \emph{user based curation}. 
+These curative systems are in place to provide a smart and involuntary feedback to the given environment. 
+The former is more of predictive system devised on a hardware whereas, the latter is for the user to actively handle the response provided by hardware. 
+The curation handled by the device are based on the sensor information it receives from its end points(\emph{sensory hardware units}), such a curation is called as \emph{``Direct Machine Based Curation''}. 
+There is also a hybrid machine based curation provided by the device and the cloud server which relies on the Weather Forecast information with the collects sensor values from the endpoints, such a curation can be called as \emph{``Advanced Machine Based Curation''}. 
+If the user wants to take over the system then, it becomes more of a \emph{``User Based Curation''}. 
+On top of all, the proposed system design is a pub-sub system. 
+The Monitoring hardware is the publisher and Mobile based devices are subscribers. 
+The cloud based server act as \emph{``brokers''}. 
+
+\subsection*{Basic Interaction}
+
+Primarily the interaction between the monitoring device and the user enabled mobile device happens as a publisher-subscriber system. 
+This interaction is brokered by the cloud based server with monitoring hardware and the mobile device as the publisher and subscriber respectively. 
+The Cloud Based server - ``Parse''~\footnote{See www.parse.com/docs} provides core functionalities. 
+This server not only gives a hand for machine based curation but also, in providing various push based services to the Mobile Device(Android/iOS/Windows).
+The monitoring hardware used for this system is .Net Gadgeteer~\footnote{See www.netmf.com/gadgeteer/}. 
+Before any curation to work the device must initially register to the cloud server by their respective device tokens thereby, the broker service can later on perform push services. 
+For handling the registration operation, the server have provided two different registration APIs --- one for the Android/iOS/Windows device using which mobile device can register itself and also subscribe to a particular monitoring device.
+And the other for the Monitoring hardware device in order for registering to server with its Geo-Location. 
+Once the registration is successful the device and user can perform curations.
+The mobile application deployed in the mobile device informs the user about the device status and weather status in the location of subscribed monitoring device using which user can perform the curation of the system(\emph{Ref:Table~\ref{tab:API_TAB}}).
+
+\begin{center}
+\begin{longtable}{| p{.35\textwidth}| p{.20\textwidth}| p{.20\textwidth} | p{.40\textwidth} |}
+%\begin{tabular}{| l | l | l |p{4cm} |}
+   \hline
+   \textbf{API} & \textbf{Type} & \textbf{Target} & \textbf{Summary} \\ \hline
+
+   \emph{register} & Registration &.Net Gadgeteer & Registers the  Device ID of Gadgeteer to the server and also provides the Geo Location to the server.
+   \\ \hline
+
+
+   \emph{extDeviceRegister} & Registration & Android/iOS & Registers the mobile device to the server and subscribes to a gadgeteer device by providing the Device ID of Gadgeteer as one of the inputs.
+   \\ \hline
+
+   \emph{deviceStatus} & Device & Android/iOS & Provides the status such as water, light modules of monitoring device to which the mobile device has subscribed to.
+   \\ \hline
+   
+   \emph{updateDeviceStatus} & Device & .Net Gadgeteer & Updates the device status of the monitoring hardware device in the server. When such a modification happens an event is triggered to all the subscribed mobile devices(a push based service). 
+   \\ \hline
+
+	\emph{manualOverride} & Device & Android/iOS & Modifies the device status of the monitoring hardware device in the server. When such a modification happens an event is triggered to the subscribed gadgeteer device(a poll based service). 
+   \\ \hline
+
+	\emph{pollForDevice} & Device & .NetGadgeteer & Polling mechanism implemented for monitoring hardware thereby, the hardware can poll for events created by mobile interfaced user.
+   \\ 
+   \hline   
+   \pagebreak 
+   \hline
+	\emph{weatherStatusForDevice} & Weather & Android/iOS & Provides the weather condition in the location of monitoring device to which the mobile device has subscribed to.
+   \\ \hline      
+
+	\emph{weatherForecastForDevice} & Weather & Both & Provides the weather forecast to the gadgeteer for the timeline of closest 3 hour time slot. In case of mobile device, it provides an overall forecast which includes for the next 24 hrs from the current time. 
+   \\ \hline      
+
+\caption{API Table} % needs to go inside longtable environment
+\label{tab:API_TAB}
+
+\end{longtable}
+%\end{tabular} 
+\end{center}
 
 \subsection*{Machine Based Curation}
 
-For machine based curation, we have made use of Centralized Cloud Based server - ``Parse''~\footnote{See www.parse.com/docs} for our core functionalities. This server is not only gives a hand for machine based curation but also, in providing various push based services to the Mobile Device(Android/iOS/Windows). The monitoring hardware used for this system is .Net Gadgeteer~\footnote{See www.netmf.com/gadgeteer/}. As said stated in main section, machine based curation works in modes --- \emph{Direct} and \emph{Advanced}. In case of Direct, the cloud server acts as a \emph{``broker''} between the Mobile device and the Monitoring Hardware. Whereas in case of Advanced, it is more of a hybrid model where both weather forecast information provided by the server and sensor data collected by the device is considered before performing an event. Sometimes is more of an \emph{``ìntelligent''} system.
+ As said stated in main section, machine based curation works in two modes --- \emph{Direct} and \emph{Advanced}. 
+In case of \emph{``Direct''}, the cloud server acts as a \emph{``broker''} between the Mobile device and the Monitoring Hardware. 
+Whereas in case of \emph{``Advanced''}, it is more of a hybrid model where both weather forecast information provided by the server and sensor data collected by the device are considered before performing an event.
+
+\subsubsection*{Direct Mode}
+
+The sensor nodes detects the changes in the environment around the monitoring plant such as - light, moisture. 
+Based on these values the monitoring device will curate the events to be handled in the system. 
+The curation is very straight-forward due to which it is called as \emph{``Direct''}. 
+The monitoring hardware is integrated with moisture and light sensors which can help in providing valid curations to the system. 
+Moisture sensors readings are compared with the threshold values set in the monitoring hardware and necessary actions are performed. 
+If the moisture reading is low and, as per the plant configuration the watering for the plant is required then, the plant will get watered accordingly.
+The same happens with light illumination on the plant, the light sensor deployed with the Gadgeteer detects the light change and accordingly turns ON the artificial light provided.
+The direct mode completely relies on the sensor nodes and gadgeteer device.
+
+\subsubsection*{Advanced Mode}
+
+Hybrid machine curation is based on predictive inputs provided by the server and the sensor inputs from the sensory nodes. 
+For the implementation of such a mode, the system requires to get access of weather forecast of the location where the monitoring unit is present.
+Such an implementation is handled by the \emph{weatherForecastForDevice} API provided by the server.
+Such a service is invoked by the monitoring device only when it believes it has encountered a minimum threshold for its activity. 
+For example, the monitoring device when it detects the reduction in moisture content in system and requires the \emph{``Direct''} mode to take over.
+Instead of such a takeover the \emph{``Advanced''} mode of operation is initiated.
+In this mode of operation, the device performs curation with the server as well. 
+Thus making the system more of a hybrid model.
+When the monitoring hardware decides to invoke the weather forecast API, it sends its current device time using which the server can send back the forecast time slot for the device.
+The time slot mechanism is handled based on the time provided by the device.
+
+\begin{algorithm}
+\caption{Calculate Time Slot}          % give the algorithm a caption
+\label{time_alg}      
+\begin{algorithmic}
+\\
+\State $timedif \gets devtime - curtimeslot$
+\If {$timedif \geq 0$}
+    \State $timeslot\gets timedif/timeslotduration$
+    \If {$timeslot \leq maxtimeslot$}
+        \If {$weatherinfo[timeslot] \neq ``Rain''$ }
+        		\State $isRain \gets false$
+    		\Else
+    			\State $isRain \gets true$
+    		\EndIf
+    \Else
+    		\State $return \gets ``Invalid Device time''$
+    \EndIf
+\Else
+    \State $return \gets ``Use Previous Forecast Data''$
+\EndIf
+\State $return \gets isRain$
+\end{algorithmic}
+\end{algorithm} 
 
 \subsection*{User Based Curation}
 
+The user based curation is hand held by the user using the Android/iOS devices. 
+The user can curate the device and weather statuses of the monitored device using his/her mobile device.
+Using the data provided by the android application, the user can perform override functionalities (if required) by the user.
+The standard APIs provided by the server can be used by the user's mobile application to handle the device and weather statuses.
+The user can also invoke the weather forecast API which was provided for advanced machine curation.
+The forecast API does not work the same way as for the gadgeteer. 
+In case of invocation from the mobile device, the forecast API provides a generic weather forecast for the next 24 hrs. 
+Using such an information the user can perform much more intelligent decisions.
+User curation is handled by having the option for the user to perform manual override option from the Android device.
+Since the current implementation of the Parse SDK does not support the Gadgeteer.
+The system performs a polling service from monitoring hardware. 
+The Gadgeteer polls the server to see if there is any new event waiting for the Gadgeteer to service upon.
+If it finds the servicing, then it handles the change and performs a update device status API call to the server. 
+Thereby, triggering a push to the user's mobile device.
 
 \section*{Evaluation}
 
