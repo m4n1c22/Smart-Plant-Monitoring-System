@@ -60,9 +60,6 @@ They have also developed a Web-based plant monitoring application.
 Greenhouse grower can read the measurements over the Internet, and an alarm will be sent to his mobile phone by SMS or GPRS if some measurement variable changes rapidly. 
 Bridge node gathers data from other sensor nodes, which transmit the measurements of temperature and relative humidity in one minute intervals. 
 
-
-
-
 Teemu Ahonen et al~\cite{ref004}, has done the research in Martens Greenhouse Research Center’s greenhouse in the Närpiö town in Western Finland, they had integrated three commercial sensors with Sensinode’s sensor platform to measure four environmental key variables in greenhouse control.
 The system feasibility was verified in a simple star topology setup in a tomato greenhouse.
 The sensors used were SHT75 humidity/temperature sensor and TSL262R light irradiance sensor, and Figaro’s TGS4161 CO2 sensor used. 
@@ -95,7 +92,7 @@ Before any curation to work the device must initially register to the cloud serv
 For handling the registration operation, the server have provided two different registration APIs --- one for the Android/iOS/Windows device using which mobile device can register itself and also subscribe to a particular monitoring device.
 And the other for the Monitoring hardware device in order for registering to server with its Geo-Location. 
 Once the registration is successful the device and user can perform curations.
-The mobile application deployed in the mobile device informs the user about the device status and weather status in the location of subscribed monitoring device using which user can perform the curation of the system(\emph{Ref:Table~\ref{tab:API_TAB}}).\\ \\
+The mobile application deployed in the mobile device informs the user about the device status and weather status in the location of subscribed monitoring device using which user can perform the curation of the system(\emph{Ref:Table~\ref{tab:API_TAB}}).\\ 
 
 \begin{center}
 \begin{longtable}{| p{.35\textwidth}| p{.20\textwidth}| p{.20\textwidth} | p{.40\textwidth} |}
@@ -122,8 +119,7 @@ The mobile application deployed in the mobile device informs the user about the 
 	\emph{pollForDevice} & Device & .NetGadgeteer & Polling mechanism implemented for monitoring hardware thereby, the hardware can poll for events created by mobile interfaced user.
    \\ 
    \hline   
-   \pagebreak 
-   \hline
+ 
 	\emph{weatherStatusForDevice} & Weather & Android/iOS & Provides the weather condition in the location of monitoring device to which the mobile device has subscribed to.
    \\ \hline      
 
@@ -238,9 +234,9 @@ The proposed system encounters multiple change-over schemes with respect to the 
 
 \begin{longtable}{p{1.0\textwidth}}%{p{10cm}}
 \hline
-$\textbf{Scenario 1}$  \\
+Scenario 1: Notification given by hardware device to user(weather forecasting with the chance of rain)  \\
 \hline    \\
-Notification given by hardware device to user(weather forecasting with the chance of rain)\\
+
 The device set in advanced mode.\\
 As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems. The system works as follows:
 \begin{itemize}
@@ -252,37 +248,58 @@ If there is chance of rain, the event for watering the plants has not been trigg
 
 
 \hline
+Scenario 2: Notification given by hardware device to user(weather forecasting with no chance of rain)\\
+\hline
+
+The device set in advanced mode.
+As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems.\\ The system works as follows:
+\begin{itemize}
+\item The hardware device checks the moisture or humidity of the plant soil and if the threshold value( when the plant needs water ), the weather forecast has been invoked to check if in next 1 hour if it would rain or not.
+\item If there is no chance of rain, it issues the event change to the user and starts watering the plants.
+\item If the user doesn’t want the plants to be watered, he can override the event and stop from watering the plants.
+\item Now after the manual override the device mode is set to manual mode. In manual mode( for certain time “X” period, only the manual override would be set.As to avoid continuous notification and working of the hardware.
+\end{itemize}
+\\
+\hline
+Scenario 3: Notification given by hardware device to user\\
+\hline
+ 
+The device is set in advanced mode 
+\begin{itemize}
+
+\item If the weather forecast fails in both the above mentioned scenarios 1 and 2 , The device is set in direct mode, where the hardware device will take over event required resources the plant needs automatically.
+\end{itemize}
+\\
+\hline
+
+Scenario 4 : Notification given by hardware device to user( light resource)\\
+\hline 
+
+The device is set to advanced mode.
+As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems. \\The system works as follows:
+\begin{itemize}
+\item The hardware device checks the light threshold value and sends a notification to the user regarding its event for switching on the light.
+\item If the user wants to override the event, he could manipulate it as mentioned above.
+\end{itemize}\\ 
+\hline
+Scenario 5: Notification given from user to hardware device\\
+\hline
+The device is set to manual mode.
+As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems.\\
+ The system works as follows:
+\begin{itemize}
+\item The user manipulates the resources to his plant according to the convenience of user.
+\item If the user is at different location from the location of the plant. the user can request for the (invoke) weather forecast of the plant location and according to the forecast the user can decide on what resources to be given to his/her plant.
+\end{itemize}
+\\
+\hline
 \end{longtable}
 
+\section*{Conclusion and future outlook:}
 
+The efficient automation on monitoring and control of the plants require new and revolutionary solutions. Wireless sensor networks can respond to requirement by offering an accurate and easily configurable monitoring system.In this work we are using the the moisture sensor and light sensor with which, we could efficiently monitor the basic resources of the plant .This is prototype of the monitoring and control system for plants.Unlike other automated systems which relies on automated data,our model is more “Intelligent” to utilize the resources according to the changes in weather conditions. Our model has the capability to integrate with any mobile platform, Since the broker service is running on a cloud based service it is scalable.
 
-
-
-Scenario 2:Notification given by hardware device to user(weather forecasting with no chance of rain)
-The device set in advanced mode.
-As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems. The system works as follows:
-The hardware device checks the moisture or humidity of the plant soil and if the threshold value( when the plant needs water ), the weather forecast has been invoked to check if in next 1 hour if it would rain or not.
-If there is no chance of rain, it issues the event change to the user and starts watering the plants.
-If the user doesn’t want the plants to be watered, he can override the event and stop from watering the plants.
-Now after the manual override the device mode is set to manual mode. In manual mode( for certain time “X” period, only the manual override would be set.As to avoid continuous notification and working of the hardware.
-
-Scenario 3: Notification given from user to hardware device
-The device is set to manual mode.
-As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems. The system works as follows:
-The user manipulates the resources to his plant according to the convenience of user.
-If the user is at different location from the location of the plant. the user can request for the (invoke) weather forecast of the plant location and according to the forecast the user can decide on what resources to be given to his/her plant.
-
-Scenario 4 : Notification given by hardware device to user( light resource)
-The device is set to advanced mode.
-As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems. The system works as follows:
-The hardware device checks the light threshold value and sends a notification to the user regarding its event for switching on the light.
-If the user wants to override the event, he could manipulate it as mentioned above.
-
-
-
-\section*{Inference}
-
-%Add inference here...
+For future outlook, we could add certain functionality for making the system more smart by uploading the configuration of the plant at the time of set upset, through the hardware device interface.functionalities like scheduled manual override can be added.camera monitoring , live streaming of the plant , we could use wowza streaming engine which uses RTSP and RTMP
 
 \section*{Acknowledgment}
 
