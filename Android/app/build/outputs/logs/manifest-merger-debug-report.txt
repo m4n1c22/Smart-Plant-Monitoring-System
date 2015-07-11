@@ -101,7 +101,7 @@ receiver#com.parse.ParseBroadcastReceiver
 ADDED from AndroidManifest.xml:47:3
 	android:name
 		ADDED from AndroidManifest.xml:47:13
-intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.USER_PRESENT
+intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.USER_PRESENT+com.parse.push.intent.OPEN
 ADDED from AndroidManifest.xml:48:4
 action#android.intent.action.BOOT_COMPLETED
 ADDED from AndroidManifest.xml:49:5
@@ -111,23 +111,27 @@ action#android.intent.action.USER_PRESENT
 ADDED from AndroidManifest.xml:50:5
 	android:name
 		ADDED from AndroidManifest.xml:50:13
+action#com.parse.push.intent.OPEN
+ADDED from AndroidManifest.xml:51:5
+	android:name
+		ADDED from AndroidManifest.xml:51:13
 receiver#com.parse.GcmBroadcastReceiver
-ADDED from AndroidManifest.xml:53:3
+ADDED from AndroidManifest.xml:54:3
 	android:permission
-		ADDED from AndroidManifest.xml:54:4
+		ADDED from AndroidManifest.xml:55:4
 	android:name
-		ADDED from AndroidManifest.xml:53:13
+		ADDED from AndroidManifest.xml:54:13
 intent-filter#com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION+com.parse.tutorials.pushnotifications
-ADDED from AndroidManifest.xml:55:4
+ADDED from AndroidManifest.xml:56:4
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from AndroidManifest.xml:56:5
-	android:name
-		ADDED from AndroidManifest.xml:56:13
-action#com.google.android.c2dm.intent.REGISTRATION
 ADDED from AndroidManifest.xml:57:5
 	android:name
 		ADDED from AndroidManifest.xml:57:13
-category#com.parse.tutorials.pushnotifications
-ADDED from AndroidManifest.xml:64:5
+action#com.google.android.c2dm.intent.REGISTRATION
+ADDED from AndroidManifest.xml:58:5
 	android:name
-		ADDED from AndroidManifest.xml:64:15
+		ADDED from AndroidManifest.xml:58:13
+category#com.parse.tutorials.pushnotifications
+ADDED from AndroidManifest.xml:65:5
+	android:name
+		ADDED from AndroidManifest.xml:65:15

@@ -18,9 +18,12 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08001c;
-        public static final int button=0x7f08001a;
-        public static final int button2=0x7f08001b;
+        public static final int action_settings=0x7f080021;
+        public static final int button2=0x7f08001c;
+        public static final int button3=0x7f08001b;
+        public static final int button_light_off=0x7f08001f;
+        public static final int button_light_on=0x7f08001a;
+        public static final int button_refresh=0x7f080020;
         public static final int lastWatered=0x7f080014;
         public static final int lastWateredValue=0x7f080015;
         public static final int relationLayout=0x7f080000;
@@ -29,6 +32,8 @@ public final class R {
         public static final int statusWater=0x7f080018;
         public static final int textView=0x7f080019;
         public static final int textView2=0x7f080001;
+        public static final int textView3=0x7f08001d;
+        public static final int textView4=0x7f08001e;
         public static final int today=0x7f080002;
         public static final int todayHumidity=0x7f080006;
         public static final int todayHumidityValue=0x7f080007;
