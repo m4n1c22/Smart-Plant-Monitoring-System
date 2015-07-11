@@ -51,19 +51,19 @@ This could help user not only to give the resources to the plants everyday witho
 \section*{Related Works}
 
 %Add some related work here...
-“ M. Mancuso and F. Bustaffa, “A Wireless Sensors Network for Monitoring Environmental Variables in a Tomato Greenhouse,”\\
+“ ”\\
 
 
-In the above mentioned paper,research work is done in a tomato greenhouse in the South of Italy. 
+Mancuso et all, has done a similar research work in a tomato greenhouse in the South of Italy. 
 They are using Sensicast devices for the air temperature, relativity humidity and soil temperature measurements with wireless sensor network. 
 They have also developed a Web-based plant monitoring application. 
 Greenhouse grower can read the measurements over the Internet, and an alarm will be sent to his mobile phone by SMS or GPRS if some measurement variable changes rapidly. 
 Bridge node gathers data from other sensor nodes, which transmit the measurements of temperature and relative humidity in one minute intervals. 
 
-“Teemu Ahonen, Reino Virrankoski and Mohammed Elmusrati ,”Greenhouse Monitoring with Wireless Sensor Network” , University of Vaasa“\\
+““\\
 
 
-In the above mentioned paper has done the research in Martens Greenhouse Research Center’s greenhouse in the Närpiö town in Western Finland, they had integrated three commercial sensors with Sensinode’s sensor platform to measure four environmental key variables in greenhouse control.
+Teemu Ahonen et al, has done the research in Martens Greenhouse Research Center’s greenhouse in the Närpiö town in Western Finland, they had integrated three commercial sensors with Sensinode’s sensor platform to measure four environmental key variables in greenhouse control.
 The system feasibility was verified in a simple star topology setup in a tomato greenhouse.
 The sensors used were SHT75 humidity/temperature sensor and TSL262R light irradiance sensor, and Figaro’s TGS4161 CO2 sensor used. 
 Application of the concept in the greenhouse: temperature, luminosity and humidity sensors measured climate variables and communicated directly with the gateway node. 
@@ -234,7 +234,50 @@ For more info refer Algorithm~\ref{ModeChangeoverAlgo}.
 \section*{Evaluation}
 
 %Add evaluation here...
-The proposed system encounters multiple change-over schemes with respect to the curation mechanism in place.
+The proposed system encounters multiple change-over schemes with respect to the curation mechanism in place.\\
+
+\begin{longtable}{p{1.0\textwidth}}%{p{10cm}}
+\hline
+$\textbf{Scenario 1}$  \\
+\hline    \\
+Notification given by hardware device to user(weather forecasting with the chance of rain)\\
+The device set in advanced mode.\\
+As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems. The system works as follows:
+\begin{itemize}
+\item
+The hardware device checks the moisture or humidity of the plant soil and if the threshold value( when the plant needs water ), the weather forecast has been invoked to check if in next 1 hour if it would rain or not.
+\item
+If there is chance of rain, the event for watering the plants has not been triggered.
+\end{itemize}\\
+
+
+\hline
+\end{longtable}
+
+
+
+
+
+Scenario 2:Notification given by hardware device to user(weather forecasting with no chance of rain)
+The device set in advanced mode.
+As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems. The system works as follows:
+The hardware device checks the moisture or humidity of the plant soil and if the threshold value( when the plant needs water ), the weather forecast has been invoked to check if in next 1 hour if it would rain or not.
+If there is no chance of rain, it issues the event change to the user and starts watering the plants.
+If the user doesn’t want the plants to be watered, he can override the event and stop from watering the plants.
+Now after the manual override the device mode is set to manual mode. In manual mode( for certain time “X” period, only the manual override would be set.As to avoid continuous notification and working of the hardware.
+
+Scenario 3: Notification given from user to hardware device
+The device is set to manual mode.
+As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems. The system works as follows:
+The user manipulates the resources to his plant according to the convenience of user.
+If the user is at different location from the location of the plant. the user can request for the (invoke) weather forecast of the plant location and according to the forecast the user can decide on what resources to be given to his/her plant.
+
+Scenario 4 : Notification given by hardware device to user( light resource)
+The device is set to advanced mode.
+As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems. The system works as follows:
+The hardware device checks the light threshold value and sends a notification to the user regarding its event for switching on the light.
+If the user wants to override the event, he could manipulate it as mentioned above.
+
 
 
 \section*{Inference}
@@ -256,6 +299,12 @@ Kidd, CoryD. et,al. \emph{``The Aware Home: A Living Laboratory for Ubiquitous C
 \bibitem{ref002}
 Antonio J. Jara, Miguel A. Zamora, and Antonio F. Skarmeta.  \emph{``An internet of things---based personal device for diabetes therapy management in ambient assisted living (AAL).''}.\hskip 1em plus
   0.5em minus 0.4em\relax Personal Ubiquitous Comput. 15, 4 (April 2011), 431-440.  
+  
+\bibitem{ref003}
+M. Mancuso and F. Bustaffa, \emph{``TA Wireless Sensors Network for Monitoring Environmental Variables in a Tomato Greenhouse''}.
+
+\bibitem{ref004}
+Teemu Ahonen, Reino Virrankoski and Mohammed Elmusrati , \emph{``Greenhouse Monitoring with Wireless Sensor Network''}.University of Vaasa
 
 \end{thebibliography}
 \end{document}
