@@ -8,7 +8,8 @@
 \usepackage{longtable}
 \usepackage{algpseudocode}
 \usepackage{algorithm}
-
+\usepackage{tikz}
+\usetikzlibrary{arrows}
 \begin{document}
 \title{\textbf{Smart Plant Monitoring System}}
 \author{
@@ -42,7 +43,7 @@ For user based curation, the Android device provides user an option to override 
 The most important factors for the quality and productivity of plant growth are temperature, humidity, light and the level of the carbon dioxide. 
 Continuous monitoring of these environmental variables gives information to the grower to better understand, how each factor affects growth and how to manage maximal growth of plants. 
 Climate control and monitoring of the plant is one of important aspects in agriculture. 
-The aspects we are presenting resembles the concept of precision agriculture, this is the trend of farming presented in recent years for commercial and research agriculture. 
+The aspects we are presenting resembles the concept of precision agriculture, this is the trend of farming presented in recent years for commercial and research agriculture\cite{ref005}. 
 In the precision agriculture framework the focus is mainly on understanding the environment through the interpretation of a wide variety of data coming from GPS systems, satellite imaging, and in-field sensors.Cypress is one of top semiconductor company in the world. Currently they have envisioned the scope by moving towards Internet of Things,with the major focus on ``Internet of plants''.  
 The main motivation of the project is for the user to monitor the plants or cultivation to get enough resources such as light and water without the user need to be present at the plants or cultivation area, and also could manipulate the resources provided to the plants depending on the climate of the plant's location(Example : if there is enough rain or moisture for the day, the sensor in the soil would detect accordingly for the operation to begin and intimate the user).
 This could help user not only to give the resources to the plants everyday without much manual effort also helps the constant and healthy growth of a plant.
@@ -93,7 +94,7 @@ For handling the registration operation, the server have provided two different 
 And the other for the Monitoring hardware device in order for registering to server with its Geo-Location. 
 Once the registration is successful the device and user can perform curations.
 The mobile application deployed in the mobile device informs the user about the device status and weather status in the location of subscribed monitoring device using which user can perform the curation of the system(\emph{Ref:Table~\ref{tab:API_TAB}}).\\ 
-
+\pagebreak
 \begin{center}
 \begin{longtable}{| p{.35\textwidth}| p{.20\textwidth}| p{.20\textwidth} | p{.40\textwidth} |}
 %\begin{tabular}{| l | l | l |p{4cm} |}
@@ -122,7 +123,8 @@ The mobile application deployed in the mobile device informs the user about the 
  
 	\emph{weatherStatusForDevice} & Weather & Android/iOS & Provides the weather condition in the location of monitoring device to which the mobile device has subscribed to.
    \\ \hline      
-
+\pagebreak
+   \hline
 	\emph{weatherForecastForDevice} & Weather & Both & Provides the weather forecast to the gadgeteer for the timeline of closest 3 hour time slot. In case of mobile device, it provides an overall forecast which includes for the next 24 hrs from the current time. 
    \\ \hline      
 
@@ -187,6 +189,32 @@ The time slot mechanism is handled based on the time provided by the device.
 \end{algorithmic}
 \end{algorithm} 
 
+\begin{figure} [!ht]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=7cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\small}]
+
+  \node[main node] (1) {Direct Mode};
+  \node[main node] (2) [below left of=1] {Manual Override};
+  \node[main node] (3) [below right of=1] {Advanced Mode};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge [loop above] node {DeviceStatusChanged=FALSE} (1) 
+	    edge node [sloped,above] {Override=ON} (2)
+        edge node [sloped,below] {DeviceStatusChanged=TRUE} (3)
+    (2) edge node [above] {Override=OFF} (3)
+        edge [loop below] node {Override=ON} (2)
+        %edge [loop left] node {0.4} (2)
+    (3) edge [bend left] node [above] {Override=ON} (2)
+        edge [bend right] node[sloped,above] {WeatherForecast=FAILS} (1)
+        edge [loop below] node {WeatherForecast=SUCCESS} (3);
+\end{tikzpicture}
+\caption{State Diagram Of Mode Change-Overs}
+\label{fig:ModeChangeOverStateDiagram}
+
+
+\end{figure}
+
 
 \subsection*{User Based Curation}
 
@@ -209,7 +237,7 @@ Thereby, triggering a push to the user's mobile device.
 
 The Gadgeteer initially sets itself in \emph{``Advanced''} mode and later on changes to \emph{``Direct''} mode based on the correctness of the forecast.
 When the forecast fails the gadgeteer retracts itself to \emph{``Direct''} mode. 
-For more info refer Algorithm~\ref{ModeChangeoverAlgo}.
+For more info refer Algorithm~\ref{ModeChangeoverAlgo}. There is a switching between curations as well. For more info about switching curations and modes, refer to Fig~\ref{fig:ModeChangeOverStateDiagram}.
 
 \begin{algorithm}
 \caption{Mode Change Over}          % give the algorithm a caption
@@ -226,15 +254,27 @@ For more info refer Algorithm~\ref{ModeChangeoverAlgo}.
 \end{algorithmic}
 \end{algorithm} 
 
-
+%\begin{tikzpicture}[shorten >=1pt,node distance=5cm,on grid,auto] 
+%   \node[state,initial] (q_0)   {$Advanced Mode$}; 
+%   \node[state] (q_1) [above right=of q_0] {$Direct Mode$}; 
+%   \node[state] (q_2) [below right=of q_0] {$Manual Override Mode$}; 
+%    \path[->] 
+%    (q_0) edge  node {WeatherForecast = failed} (q_1)
+%          edge  node {ManualOverride} (q_2)
+%    (q_1) edge  node  {1} (q_2)
+%          edge  node {0} (q_0)
+%    (q_2) edge  node {0} (q_0) 
+%          edge  node {1} (q_2);
+%\end{tikzpicture}
+\pagebreak
 \section*{Evaluation}
 
 %Add evaluation here...
 The proposed system encounters multiple change-over schemes with respect to the curation mechanism in place.\\
 
 \begin{longtable}{p{1.0\textwidth}}%{p{10cm}}
-\hline
-Scenario 1: Notification given by hardware device to user(weather forecasting with the chance of rain)  \\
+\hline \\
+\textbf{Scenario 1:} Notification given by hardware device to user(weather forecasting with the chance of rain)  \\
 \hline    \\
 
 The device set in advanced mode.\\
@@ -246,11 +286,11 @@ The hardware device checks the moisture or humidity of the plant soil and if the
 If there is chance of rain, the event for watering the plants has not been triggered.
 \end{itemize}\\
 
-
+\pagebreak
+\hline \\
+\textbf{Scenario 2:} Notification given by hardware device to user(weather forecasting with no chance of rain)\\
 \hline
-Scenario 2: Notification given by hardware device to user(weather forecasting with no chance of rain)\\
-\hline
-
+\\
 The device set in advanced mode.
 As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems.\\ The system works as follows:
 \begin{itemize}
@@ -260,10 +300,10 @@ As mentioned in the design and basic interactions the hardware device and androi
 \item Now after the manual override the device mode is set to manual mode. In manual mode( for certain time “X” period, only the manual override would be set.As to avoid continuous notification and working of the hardware.
 \end{itemize}
 \\
+\hline \\
+\textbf{Scenario 3:} Notification given by hardware device to user\\
 \hline
-Scenario 3: Notification given by hardware device to user\\
-\hline
- 
+\\
 The device is set in advanced mode 
 \begin{itemize}
 
@@ -271,19 +311,21 @@ The device is set in advanced mode
 \end{itemize}
 \\
 \hline
-
-Scenario 4 : Notification given by hardware device to user( light resource)\\
+\\
+\textbf{Scenario 4 :} Notification given by hardware device to user( light resource)\\
 \hline 
-
+\\
 The device is set to advanced mode.
 As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems. \\The system works as follows:
 \begin{itemize}
 \item The hardware device checks the light threshold value and sends a notification to the user regarding its event for switching on the light.
 \item If the user wants to override the event, he could manipulate it as mentioned above.
 \end{itemize}\\ 
-\hline
-Scenario 5: Notification given from user to hardware device\\
-\hline
+\hline \\
+\pagebreak
+\hline \\
+\textbf{Scenario 5:} Notification given from user to hardware device\\
+\hline\\
 The device is set to manual mode.
 As mentioned in the design and basic interactions the hardware device and android device acts as the pub-sub system and the cloud- based server acts as the broker between both systems.\\
  The system works as follows:
@@ -295,11 +337,12 @@ As mentioned in the design and basic interactions the hardware device and androi
 \hline
 \end{longtable}
 
+
 \section*{Conclusion and future outlook:}
 
 The efficient automation on monitoring and control of the plants require new and revolutionary solutions. Wireless sensor networks can respond to requirement by offering an accurate and easily configurable monitoring system.In this work we are using the the moisture sensor and light sensor with which, we could efficiently monitor the basic resources of the plant .This is prototype of the monitoring and control system for plants.Unlike other automated systems which relies on automated data,our model is more “Intelligent” to utilize the resources according to the changes in weather conditions. Our model has the capability to integrate with any mobile platform, Since the broker service is running on a cloud based service it is scalable.
 
-For future outlook, we could add certain functionality for making the system more smart by uploading the configuration of the plant at the time of set upset, through the hardware device interface.functionalities like scheduled manual override can be added.camera monitoring , live streaming of the plant , we could use wowza streaming engine which uses RTSP and RTMP
+For future outlook, we could add certain functionality for making the system more smart by uploading the configuration of the plant at the time of set upset, through the hardware device interface.functionalities like scheduled manual override can be added.camera monitoring , live streaming of the plant , we could use wowza streaming engine which uses RTSP and RTMP.
 
 \section*{Acknowledgment}
 
@@ -321,7 +364,19 @@ Antonio J. Jara, Miguel A. Zamora, and Antonio F. Skarmeta.  \emph{``An internet
 M. Mancuso and F. Bustaffa, \emph{``TA Wireless Sensors Network for Monitoring Environmental Variables in a Tomato Greenhouse''}.
 
 \bibitem{ref004}
-Teemu Ahonen, Reino Virrankoski and Mohammed Elmusrati , \emph{``Greenhouse Monitoring with Wireless Sensor Network''}.University of Vaasa
+Teemu Ahonen, Reino Virrankoski and Mohammed Elmusrati , \emph{``Greenhouse Monitoring with Wireless Sensor Network''}.\hskip 1em plus
+  0.5em minus 0.4em\relax University of Vaasa
 
+\bibitem{ref005}
+TongKe, Fan. \emph{``Smart Agriculture Based on Cloud Computing and IOT.''}\hskip 1em plus
+  0.5em minus 0.4em\relax Journal of Convergence Information Technology 8.2 (2013).
+
+\bibitem{ref006}
+Zhang, Xiang Wen, Ran Chen, and Chun Wang. \emph{``Design for Smart Monitoring and Control System of Wind Power Plants.''}\hskip 1em plus
+  0.5em minus 0.4em\relax Advanced Materials Research. Vol. 846. 2014.
+  
+\bibitem{ref007}
+Chen, Joy Iong Zong, Yuan-Chen Chen, and Shien-Dou Chung. \emph{``Implementation of a Greenhouse Crop Remote Monitoring System with IOT Technology.''}
+  
 \end{thebibliography}
 \end{document}
