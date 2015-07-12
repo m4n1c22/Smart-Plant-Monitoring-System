@@ -1,0 +1,17 @@
+{
+  "global": {
+    "parseVersion": "1.4.2"
+  },
+  "applications": {
+    "TK3": {
+      "applicationId": "APP-ID",
+      "masterKey": "MASTER-KEY"
+    },
+    "YOURAPP": {
+      "link": "APP"
+    },
+    "_default": {
+      "link": "APP"
+    }
+  }
+}
