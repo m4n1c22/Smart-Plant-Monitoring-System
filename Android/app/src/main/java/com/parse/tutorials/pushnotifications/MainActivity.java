@@ -1,17 +1,17 @@
 package com.parse.tutorials.pushnotifications;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
@@ -25,7 +25,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends FragmentActivity {
 
 	Application app;
 	String deviceToken;
@@ -42,7 +43,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		
+
 		final ParseInstallation currentInstallation = ParseInstallation.getCurrentInstallation();
 
 		currentInstallation.saveInBackground(new SaveCallback() {
@@ -69,40 +70,7 @@ public class MainActivity extends Activity {
 
 					} else {
 
-						Log.d("tk3", deviceToken.toString());
-
-						final String deviceID = "100001";
-
-						Map map = new HashMap();
-						map.put("ExtDeviceID", deviceToken);
-						map.put("DeviceID", deviceID);
-
-						ParseCloud.callFunctionInBackground("extDeviceRegister", map, new FunctionCallback<Object>() {
-
-							public void done(Object result, ParseException e) {
-								Log.d("tk3", "called extdeviceregister");
-
-
-								app.isSubscribtedToADevice = true;
-								app.registeredDeviceID = deviceID;
-
-								if (e == null) {
-									// result is "Hello world!"
-									Log.d("tk3", result.toString());
-								} else {
-									Log.d("tk3", e.toString());
-								}
-
-
-								// request current weather data
-								loadCurrentWeather();
-								//request tomorrows weather data
-								loadTomorrowWeather();
-								//request device status
-								loadDeviceStatus();
-
-							}
-						});
+						openNewDeviceIdDialog(null);
 
 
 					}
@@ -118,6 +86,42 @@ public class MainActivity extends Activity {
 		});
 
 
+	}
+
+
+
+	private void registerDevice(){
+		Log.d("tk3", deviceToken.toString());
+
+		Map map = new HashMap();
+		map.put("ExtDeviceID", deviceToken);
+		map.put("DeviceID", app.registeredDeviceID);
+
+		ParseCloud.callFunctionInBackground("extDeviceRegister", map, new FunctionCallback<Object>() {
+
+			public void done(Object result, ParseException e) {
+				Log.d("tk3", "called extdeviceregister");
+
+
+				app.isSubscribtedToADevice = true;
+
+				if (e == null) {
+					// result is "Hello world!"
+					Log.d("tk3", result.toString());
+				} else {
+					Log.d("tk3", e.toString());
+				}
+
+
+				// request current weather data
+				loadCurrentWeather();
+				//request tomorrows weather data
+				loadTomorrowWeather();
+				//request device status
+				loadDeviceStatus();
+
+			}
+		});
 	}
 
 	/**
@@ -194,18 +198,22 @@ public class MainActivity extends Activity {
 			public void done(HashMap result, ParseException e) {
 				Log.d("tk3", "called deviceStatus");
 
+				//Log.d("tk3", result.toString());
+
 				if (e == null) {
 
-					try {
-						// convert result to JSON for access
-						JSONObject json = new JSONObject(result);
+					JSONObject json = new JSONObject(result);
 
-
+					try{
 						// set device last watered info
 						TextView textView_LastWatered;
 						textView_LastWatered = (TextView) findViewById(R.id.lastWateredValue);
 						textView_LastWatered.setText(json.get("WateredTime").toString());
+					} catch (JSONException e1) {
+						e1.printStackTrace();
+					}
 
+					try{
 						// set current device light status
 						TextView textView_StatusLight;
 						textView_StatusLight = (TextView) findViewById(R.id.statusLight);
@@ -217,8 +225,8 @@ public class MainActivity extends Activity {
 						} else {
 							textView_StatusLight.setText("Light is off!");
 							//light is on, enable override button
-							Button button_light_on = (Button) findViewById(R.id.button_light_on);
-							button_light_on.setEnabled(true);
+							Button button_light_off = (Button) findViewById(R.id.button_light_off);
+							button_light_off.setEnabled(false);
 						}
 
 						// set current device water status
@@ -412,11 +420,23 @@ public class MainActivity extends Activity {
 		});
 	}
 
-	/**
-	 * Function called by refresh button to reload the device status
-	 * @param view
-	 */
-	public void reloadDeviceStatus(View view){
+	public void openNewDeviceIdDialog(View view){
+		FragmentManager fm = getSupportFragmentManager();
+
+		InsertDeviceID alertdFragment = new InsertDeviceID();
+		// Show Alert DialogFragment
+		alertdFragment.show(fm, "Alert Dialog Fragment");
+
+	}
+
+	public void setNewDeviceId(String newId){
+		app.registeredDeviceID = newId;
+		Log.d("tk3", "new deviceId = "+newId);
+		registerDevice();
+	}
+
+	public void reloadDeviceData(View view){
+		Toast.makeText(getApplicationContext(), "Refresh...", Toast.LENGTH_SHORT).show();
 		loadDeviceStatus();
 	}
 
