@@ -15,3 +15,9 @@ After Installing the setup configure the data bases in Parse:
   * Humidity - type(number)
   * Temperature - type(number)
   * Pressure - type(number)
+
+* Data Table - PollQueue -> Add columns:<br>
+  * DeviceID - type(String)
+  * WaterStatus - type(BOOLEAN)
+  * LightStatus - type(BOOLEAN)
+  * OverrideTime- type(Date)
