@@ -1043,6 +1043,8 @@ Parse.Cloud.define("pollForDevice", function(request, response) {
                 success: function(queues) {
                   if(queues != null && queues.length != 0) {  
                     var polledDevice = queues;
+                    var lightStatus = polledDevice.get("LightStatus");
+                    var waterStatus;
                     var curTime = new Date();
                     var deviceRegTime = polledDevice.get("OverrideTime");
                     
@@ -1050,6 +1052,8 @@ Parse.Cloud.define("pollForDevice", function(request, response) {
 
                     if(deviceRegTime ==null) {
                     	overrideFlag = false;
+                    	if(polledDevice.get("WaterStatus"))                  
+                    		waterStatus = polledDevice.get("WaterStatus");              
                     }
                     else {
 
@@ -1058,11 +1062,18 @@ Parse.Cloud.define("pollForDevice", function(request, response) {
 
                     	if((curTime - deviceRegTime)>= 86400) {
 
-                    		overrideFlag = false;
+                    		overrideFlag = false;                    
                     	}
                 	}
 
-                    var polledDataJSON = {"DeviceID":request.params.DeviceID,"LightStatus":polledDevice.get("LightStatus"),"WaterStatus":polledDevice.get("WaterStatus"),"IsBlocked":overrideFlag};
+                    var polledDataJSON;
+                    if(waterStatus==null) {
+                    	polledDataJSON = {"DeviceID":request.params.DeviceID,"LightStatus":lightStatus,"IsBlocked":overrideFlag};
+                    }
+                    else
+                    {
+                    	polledDataJSON = {"DeviceID":request.params.DeviceID,"LightStatus":lightStatus,"WaterStatus":waterStatus,"IsBlocked":overrideFlag};
+                    }
                     JSON.stringify(polledDataJSON);
                     if((overrideFlag==false)&&((polledDevice.get("LightStatus")==null)||(polledDevice.get("LightStatus")))) {
                     	polledDevice.destroy({
