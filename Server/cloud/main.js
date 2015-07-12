@@ -687,15 +687,23 @@ Parse.Cloud.define("updateDeviceStatus", function(request, response) {
       var lastIlluminatedTime;
       var lastWateredTime;
       if((request.params.LightStatus != null)&&(request.params.LightStatus.length!=0)) {
+        if((!request.params.LightStatus)&&(device.get("LightStatus")))
+        {
+        	device.set("IlluminatedTime", lastUpdated);
+        	lastIlluminatedTime = lastUpdated;        	
+        
+        }
         device.set("LightStatus", request.params.LightStatus);
-        device.set("IlluminatedTime", lastUpdated);
-        lastIlluminatedTime = lastUpdated;
         devChange = true;
       }
       if((request.params.WaterStatus != null)&&(request.params.WaterStatus.length!=0)) {
-        device.set("WaterStatus", request.params.WaterStatus);
-        device.set("WateredTime", lastUpdated);
-        lastWateredTime = lastUpdated;
+        if((!request.params.WaterStatus)&&(device.get("WaterStatus")))
+        {
+        	device.set("WateredTime", lastUpdated);
+	    	lastWateredTime = lastUpdated;
+	    
+	    }
+	    device.set("WaterStatus", request.params.WaterStatus);
         devChange = true;
       }
       
@@ -788,7 +796,9 @@ Parse.Cloud.define("manualOverride", function(request, response) {
             var pollQuery     = new Parse.Query("PollQueue");
             var devQuery      = new Parse.Query("Device");
             var pollDeviceID  = results.get("DeviceID");
-            
+            var lightStatus = false;
+            var waterStatus = false;
+            var overrideTime = 86400;
             var isOverrideRequired = false;
 
             if((pollDeviceID == null)||(pollDeviceID.length==0)) {
@@ -817,16 +827,63 @@ Parse.Cloud.define("manualOverride", function(request, response) {
                          response.error("API Failed...");
                       }
                     });
+
+                    if(request.params.LightStatus === "true") {
+
+                    	lightStatus = true;
+                    }
+                    else if(request.params.LightStatus === "false") {
+
+                    	lightStatus = false;
+                    }
+                    else {
+
+                    	lightStatus = polledDevice.get("LightStatus");
+                    }
+
+                    if(request.params.WaterStatus === "true") {
+
+                    	waterStatus = true;
+                    }                   
+                    else if(request.params.WaterStatus === "false") {
+
+                    	waterStatus = false;
+                    }
+                    else {
+
+                    	waterStatus = polledDevice.get("WaterStatus");
+                    }
+
+
+
+
+
                                                                               
                     
-                    if((request.params.LightStatus != null)&&(request.params.LightStatus.length != 0)&&(Boolean(Boolean(request.params.LightStatus) != polledDevice.get("LightStatus")))) {         
+                    if((request.params.LightStatus != null)&&(request.params.LightStatus.length != 0)&&(Boolean(lightStatus != polledDevice.get("LightStatus")))) {         
                       
-                      pQueue.set("LightStatus", request.params.LightStatus);
+                      if(!lightStatus){
+
+                      	pQueue.set("OverrideTime", new Date());		
+                      }
+                      else 
+                      {
+                      	pQueue.set("OverrideTime", null);
+                      }
+                      pQueue.set("LightStatus", lightStatus);
                       isOverrideRequired = true;
                     }
-                    if((request.params.WaterStatus != null)&&(request.params.WaterStatus.length != 0)&&(Boolean(Boolean(request.params.WaterStatus) != polledDevice.get("WaterStatus")))) {         
+                    if((request.params.WaterStatus != null)&&(request.params.WaterStatus.length != 0)&&(Boolean(waterStatus != polledDevice.get("WaterStatus")))) {         
                       
-                      pQueue.set("WaterStatus", request.params.WaterStatus);
+                      if(!waterStatus){
+
+                      	pQueue.set("OverrideTime", new Date());		
+                      }
+                      else 
+                      {
+                      	pQueue.set("OverrideTime", null);
+                      }
+                      pQueue.set("WaterStatus", waterStatus);
                       isOverrideRequired = true;
                     }
                     if(isOverrideRequired) {
@@ -835,7 +892,7 @@ Parse.Cloud.define("manualOverride", function(request, response) {
                       pQueue.save(null, {
                         success: function(extDevice) {
                         // Execute any logic that should take place after the object is saved.
-                          console.log((Boolean(request.params.WaterStatus) != polledDevice.get("WaterStatus")));
+                          console.log((Boolean(waterStatus) != polledDevice.get("WaterStatus")));
                           response.success("Poll added success..."); 
                         },
                         error: function(extDevice, error) {
@@ -867,19 +924,66 @@ Parse.Cloud.define("manualOverride", function(request, response) {
                       }
                     });
                                                                               
+
+                    if(request.params.LightStatus === "true") {
+
+                    	lightStatus = true;
+                    }
+                    else if(request.params.LightStatus === "false") {
+
+                    	lightStatus = false;
+                    }
+                    else {
+
+                    	lightStatus = polledDevice.get("LightStatus");
+                    }
+
+                    if(request.params.WaterStatus === "true") {
+
+                    	waterStatus = true;
+                    }                   
+                    else if(request.params.WaterStatus === "false") {
+
+                    	waterStatus = false;
+                    }
+                    else {
+
+                    	waterStatus = polledDevice.get("WaterStatus");
+                    }
+
+
+
+
+
                     
                     if((request.params.LightStatus != null)&&(request.params.LightStatus.length != 0)) {                 
-                      pQueue.set("LightStatus", request.params.LightStatus);
+                      if(!lightStatus){
+
+                      	pQueue.set("OverrideTime", new Date());		
+                      }
+                      else 
+                      {
+                      	pQueue.set("OverrideTime", null);
+                      }
+                      pQueue.set("LightStatus", lightStatus);
                     }
                     if((request.params.WaterStatus != null)&&(request.params.WaterStatus.length != 0)) {         
-                      pQueue.set("WaterStatus", request.params.WaterStatus);
+                      if(!waterStatus){
+
+                      	pQueue.set("OverrideTime", new Date());		
+                      }
+                      else 
+                      {
+                      	pQueue.set("OverrideTime", null);
+                      }
+                      pQueue.set("WaterStatus", waterStatus);
                     }
                 
                     pQueue.set("DeviceID",pollDeviceID );
                     pQueue.save(null, {
                         success: function(extDevice) {
                         // Execute any logic that should take place after the object is saved.
-                          response.success("Poll added success");  
+                          response.success("Poll added success...");  
                         },
                         error: function(extDevice, error) {
                         // Execute any logic that should take place if the save fails.
@@ -927,6 +1031,7 @@ Parse.Cloud.define("manualOverride", function(request, response) {
 Parse.Cloud.define("pollForDevice", function(request, response) {
 
   var pollQuery = new Parse.Query("PollQueue");
+  var overrideFlag = true;
   if((request.params.DeviceID == null)||request.params.DeviceID.length == 0) {
     response.error("API Failed...");
   }
@@ -938,18 +1043,43 @@ Parse.Cloud.define("pollForDevice", function(request, response) {
                 success: function(queues) {
                   if(queues != null && queues.length != 0) {  
                     var polledDevice = queues;
-                    var polledDataJSON = {"DeviceID":request.params.DeviceID,"LightStatus":polledDevice.get("LightStatus"),"WaterStatus":polledDevice.get("WaterStatus")};
+                    var curTime = new Date();
+                    var deviceRegTime = polledDevice.get("OverrideTime");
+                    
+
+
+                    if(deviceRegTime ==null) {
+                    	overrideFlag = false;
+                    }
+                    else {
+
+    	                curTime = curTime.getTime()/1000;
+ 	    	            deviceRegTime = deviceRegTime.getTime()/1000;
+
+                    	if((curTime - deviceRegTime)>= 86400) {
+
+                    		overrideFlag = false;
+                    	}
+                	}
+
+                    var polledDataJSON = {"DeviceID":request.params.DeviceID,"LightStatus":polledDevice.get("LightStatus"),"WaterStatus":polledDevice.get("WaterStatus"),"IsBlocked":overrideFlag};
                     JSON.stringify(polledDataJSON);
-                    polledDevice.destroy({
-                      success: function(pollDeviceID) {
-                      response.success(polledDataJSON);
+                    if((overrideFlag==false)&&((polledDevice.get("LightStatus")==null)||(polledDevice.get("LightStatus")))) {
+                    	polledDevice.destroy({
+                      		success: function(pollDeviceID) {
+                      			response.success(polledDataJSON);
               
-                      },
-                      error: function(pollDeviceID, error) {
-                      // The delete failed.
-                      // error is a Parse.Error with an error code and message.
-                      }
-                    });
+                      		},
+                      		error: function(pollDeviceID, error) {
+                      		// The delete failed.
+                      		// error is a Parse.Error with an error code and message.
+                      			response.error();
+                      		}
+                    	});
+                	}
+                	else{
+                		response.success(polledDataJSON);
+                	}
                   }
                   else {
                     var devQuery = new Parse.Query("Device");
@@ -958,7 +1088,10 @@ Parse.Cloud.define("pollForDevice", function(request, response) {
                       success: function(object) {
                       // Successfully retrieved the object.
                         if (object) {
-                            response.success("No Change");
+                        	overrideFlag = false;
+                        	var polledDataJSON = {"DeviceID":request.params.DeviceID,"IsBlocked":overrideFlag};
+                   			JSON.stringify(polledDataJSON);
+                            response.success(polledDataJSON);
                         } else {
                           response.error("DeviceID doesn't exist...");
                         }
