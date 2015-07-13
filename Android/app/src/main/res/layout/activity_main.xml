@@ -8,6 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
+    <ScrollView android:id="@+id/ScrlView" android:layout_width="fill_parent" android:layout_height="fill_parent" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -39,9 +40,8 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Tomorrow"
             android:id="@+id/tomorrow"
-            android:layout_marginTop="29dp"
             android:layout_below="@+id/textView2"
-            android:layout_toRightOf="@+id/textView2" />
+            android:layout_alignLeft="@+id/tomorrowTemp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -112,9 +112,10 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/todayStatusValue"
+            android:maxLength="16"
+            android:text="none"
             android:layout_alignTop="@+id/todayStatus"
-            android:layout_marginLeft="100dp"
-            android:text="none" />
+            android:layout_toRightOf="@+id/todayPressure" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -185,8 +186,9 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="none"
             android:id="@+id/tomorrowStatusValue"
+            android:maxLength="16"
             android:layout_alignTop="@+id/tomorrowStatus"
-            android:layout_alignLeft="@+id/tomorrowPressureValue" />
+            android:layout_toRightOf="@+id/tomorrowHumidity" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -202,7 +204,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="none    oj po"
+            android:text="none"
             android:id="@+id/lastWateredValue"
             android:layout_below="@+id/lastWatered"
             android:layout_centerHorizontal="true" />
@@ -221,7 +223,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Light is off"
+            android:text="no data"
             android:id="@+id/statusLight"
             android:layout_below="@+id/status"
             android:layout_centerHorizontal="true" />
@@ -230,7 +232,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Water is off"
+            android:text="no data"
             android:id="@+id/statusWater"
             android:layout_below="@+id/statusLight"
             android:layout_centerHorizontal="true" />
@@ -241,28 +243,84 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Override"
             android:id="@+id/textView"
-            android:layout_below="@+id/statusWater"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="44dp" />
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/button"
+            android:layout_toLeftOf="@+id/textView4" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Water now"
-            android:id="@+id/button"
-            android:layout_below="@+id/textView"
-            android:layout_toLeftOf="@+id/textView"
-            android:onClick="overrideWater"/>
+            android:text="Auto Light"
+            android:id="@+id/button_light_on"
+            android:onClick="overrideStartLight"
+            android:layout_above="@+id/button3"
+            android:layout_toRightOf="@+id/statusLight" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Light now"
+            android:text="water now"
             android:id="@+id/button2"
+            android:onClick="overrideStartWater"
+            android:layout_below="@+id/textView3"
+            android:layout_alignLeft="@+id/textView3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Water"
+            android:id="@+id/textView3"
             android:layout_below="@+id/textView"
-            android:layout_toRightOf="@+id/statusLight"
-            android:onClick="overrideLight" />
+            android:layout_alignRight="@+id/todayHumidity" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="block for 24h"
+            android:id="@+id/button3"
+            android:onClick="overrideBlockWater"
+            android:layout_below="@+id/button2"
+            android:layout_alignLeft="@+id/button2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Light"
+            android:id="@+id/textView4"
+            android:layout_below="@+id/textView"
+            android:layout_toRightOf="@+id/statusLight" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Light off"
+            android:id="@+id/button_light_off"
+            android:layout_alignTop="@+id/button3"
+            android:onClick="overrideStopLight"
+            android:layout_alignLeft="@+id/button_light_on" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="set deviceID"
+            android:id="@+id/button"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/statusWater"
+            android:onClick="openNewDeviceIdDialog"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="refresh"
+            android:id="@+id/button4"
+            android:onClick="reloadDeviceData"
+            android:layout_alignTop="@+id/button"
+            android:layout_alignLeft="@+id/tomorrowStatusValue" />
 
     </RelativeLayout>
-
+</ScrollView>
 </LinearLayout>

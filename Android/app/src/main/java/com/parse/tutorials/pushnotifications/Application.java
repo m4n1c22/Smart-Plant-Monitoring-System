@@ -12,6 +12,9 @@ import com.parse.SaveCallback;
 
 public class Application extends android.app.Application {
 
+  String registeredDeviceID = "";
+  Boolean isSubscribtedToADevice = false;
+
   public Application() {
   }
 
