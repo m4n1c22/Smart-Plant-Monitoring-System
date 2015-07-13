@@ -44,21 +44,29 @@ public class MainActivity extends FragmentActivity {
 	public void onStart() {
 		super.onStart();
 
+		// get the current parse installation
 		final ParseInstallation currentInstallation = ParseInstallation.getCurrentInstallation();
 
+		// save the current parse installation, so we can use it later
 		currentInstallation.saveInBackground(new SaveCallback() {
 			public void done(ParseException e) {
 				if (e == null) {
 
-					// try to geht the device token
+					// try to get the device token
 					// exception when device has no play services!
 					try {
+						// get device token
 						deviceToken = currentInstallation.get("deviceToken").toString();
 					} catch (RuntimeException e1) {
+						// catch exception if play services are not installed
+						// use fixed string. No push Servies are possible
 						Toast.makeText(getApplicationContext(), "PlaySerices are missing! Using random String as device token.", Toast.LENGTH_SHORT).show();
-						deviceToken = "APB91bEGjHu7jB-zzCoUhgxgOsnM2-gYRKbcUDjeIgMN2xcxds-eZ7AVocUopPr3CvPFUtLJUE2Wf3rMXX2kX7_My8o1b_NQ0tkETZ2D8XHzg5ygZMHWytcxm3shNU6USCJnx63j20_BSMveidH1vwiyZWIbpXm6zw";
+						deviceToken = "idH1vwiyZWIbpXm6zw-No-play-services";
 					}
 
+					// if the app is already subscribed to a device
+					// do not subscribe again, just load data
+					// this happens when the app is running in the background and was reopend
 					if (app.isSubscribtedToADevice) {
 
 						// request current weather data
@@ -68,17 +76,14 @@ public class MainActivity extends FragmentActivity {
 						//request device status
 						loadDeviceStatus();
 
+						Toast.makeText(getApplicationContext(), "Fetching data...", Toast.LENGTH_SHORT).show();
+
+					// if the device was not running in the background, the deviceId has to be set
 					} else {
-
+						// open dialog to ask the user for the deviceId.
 						openNewDeviceIdDialog(null);
-
-
 					}
 
-					Toast.makeText(getApplicationContext(), "Fetching data...", Toast.LENGTH_SHORT).show();
-
-
-					//Log.d("devicetoken", deviceToken);
 				} else {
 					Log.d("tk3", "was not able to call extDeviceRegister");
 				}
@@ -89,29 +94,33 @@ public class MainActivity extends FragmentActivity {
 	}
 
 
-
+	/**
+	 * Function used to register the device in parse
+	 */
 	private void registerDevice(){
 		Log.d("tk3", deviceToken.toString());
 
+		// build hash map with the reqiered data which will be send to parse
 		Map map = new HashMap();
 		map.put("ExtDeviceID", deviceToken);
 		map.put("DeviceID", app.registeredDeviceID);
 
+		// call function in parse
 		ParseCloud.callFunctionInBackground("extDeviceRegister", map, new FunctionCallback<Object>() {
 
+			// callback if registration was done
 			public void done(Object result, ParseException e) {
 				Log.d("tk3", "called extdeviceregister");
 
-
-				app.isSubscribtedToADevice = true;
-
+				// check if there was an exception or not
 				if (e == null) {
-					// result is "Hello world!"
+					// set the flag isSubsribedToADevice to true, so the app will not register again next time
+					app.isSubscribtedToADevice = true;
+
 					Log.d("tk3", result.toString());
 				} else {
 					Log.d("tk3", e.toString());
 				}
-
 
 				// request current weather data
 				loadCurrentWeather();
@@ -420,27 +429,41 @@ public class MainActivity extends FragmentActivity {
 		});
 	}
 
+	/**
+	 * Function to open a dialog and ask the user for a deviceId
+	 * @param view
+	 */
 	public void openNewDeviceIdDialog(View view){
 		FragmentManager fm = getSupportFragmentManager();
-
 		InsertDeviceID alertdFragment = new InsertDeviceID();
 		// Show Alert DialogFragment
 		alertdFragment.show(fm, "Alert Dialog Fragment");
-
 	}
 
+	/**
+	 * Function called by dialog, to set a new deviceId
+	 * Triggers device registration in parse
+	 * @param newId
+	 */
 	public void setNewDeviceId(String newId){
 		app.registeredDeviceID = newId;
 		Log.d("tk3", "new deviceId = "+newId);
 		registerDevice();
 	}
 
+	/**
+	 * Function calling an update request on the device status. Used by refresh button
+	 * @param view
+	 */
 	public void reloadDeviceData(View view){
 		Toast.makeText(getApplicationContext(), "Refresh...", Toast.LENGTH_SHORT).show();
 		loadDeviceStatus();
 	}
 
-
+	/**
+	 * Function called by incoming Notification. Triggers update request
+	 * @param intent
+	 */
 	@Override
 	protected void onNewIntent(Intent intent) {
 		loadDeviceStatus();

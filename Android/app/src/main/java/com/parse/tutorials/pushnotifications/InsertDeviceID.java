@@ -45,10 +45,4 @@ public class InsertDeviceID extends DialogFragment {
                 });
        return builder.create();
     }
-
-    public void setNewDeviceID(){
-
-    }
-
-
 }
