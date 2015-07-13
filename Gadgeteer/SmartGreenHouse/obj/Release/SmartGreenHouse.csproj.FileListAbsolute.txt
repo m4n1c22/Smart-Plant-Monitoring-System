@@ -1,0 +1,5 @@
+C:\Users\viswanathvadhri\documents\visual studio 2013\Projects\SmartGreenHouse\SmartGreenHouse\obj\Release\TinyCLR_DebugReferences.cache
+C:\Users\viswanathvadhri\documents\visual studio 2013\Projects\SmartGreenHouse\SmartGreenHouse\obj\Release\SmartGreenHouse.Resources.resources
+C:\Users\viswanathvadhri\documents\visual studio 2013\Projects\SmartGreenHouse\SmartGreenHouse\obj\Release\SmartGreenHouse.csproj.GenerateResource.Cache
+C:\Users\viswanathvadhri\documents\visual studio 2013\Projects\SmartGreenHouse\SmartGreenHouse\obj\Release\SmartGreenHouse.Resources.tinyresources
+C:\Users\viswanathvadhri\documents\visual studio 2013\Projects\SmartGreenHouse\SmartGreenHouse\obj\Release\TinyResGen.cache

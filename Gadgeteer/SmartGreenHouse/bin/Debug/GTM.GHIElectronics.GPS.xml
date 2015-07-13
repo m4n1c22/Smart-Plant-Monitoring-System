@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GTM.GHIElectronics.GPS</name>
+    </assembly>
+    <members>
+        <member name="T:Gadgeteer.Modules.GHIElectronics.GPS">
+            <summary>A GPS module for Microsoft .NET Gadgeteer</summary>
+        </member>
+        <member name="M:Gadgeteer.Modules.GHIElectronics.GPS.#ctor(System.Int32)">
+            <summary>Constructs a new instance.</summary>
+            <param name="socketNumber">The socket that this module is plugged in to.</param>
+        </member>
+        <member name="E:Gadgeteer.Modules.GHIElectronics.GPS.PositionReceived">
+            <summary>Raised when a valid position is received.</summary>
+        </member>
+        <member name="E:Gadgeteer.Modules.GHIElectronics.GPS.NmeaSentenceReceived">
+            <summary>Raised when an NMEA sentence is received. This is for advanced users who want to parse the NMEA sentences themselves.</summary>
+        </member>
+        <member name="E:Gadgeteer.Modules.GHIElectronics.GPS.InvalidPositionReceived">
+            <summary>Raised when an invalid position is received.</summary>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.GPS.Enabled">
+            <summary>Enables or disables the GPS.</summary>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.GPS.LastPosition">
+            <summary>The last valid position received.</summary>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.GPS.LastValidPositionAge">
+            <summary>The time elapsed since the last position was received.</summary>
+        </member>
+        <member name="T:Gadgeteer.Modules.GHIElectronics.GPS.PositionReceivedHandler">
+            <summary>Represents the delegate that is used to handle the PositionReceived event</summary>
+            <param name="sender">The object that raised the event.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="T:Gadgeteer.Modules.GHIElectronics.GPS.NmeaSentenceReceivedHandler">
+            <summary>Represents the delegate that is used to handle the NMEASentenceReceived event</summary>
+            <param name="sender">The object that raised the event.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="T:Gadgeteer.Modules.GHIElectronics.GPS.InvalidPositionReceivedHandler">
+            <summary>Represents the delegate that is used to handle the InvalidPositionReceived event</summary>
+            <param name="sender">The object that raised the event.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="T:Gadgeteer.Modules.GHIElectronics.GPS.Position">
+            <summary>Represents a GPS position.</summary>
+        </member>
+        <member name="M:Gadgeteer.Modules.GHIElectronics.GPS.Position.ToString">
+            <summary>Provides a formatted string for this Position.</summary>
+            <returns>The formatted string.</returns>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.GPS.Position.Latitude">
+            <summary>The latitude.</summary>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.GPS.Position.Longitude">
+            <summary>The longitude.</summary>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.GPS.Position.LatitudeString">
+            <summary>A string representing the latitude, in the format ddmm.mmmm H, where dd = degrees, mm.mmm = minutes and fractional minutes, and H = hemisphere (N/S).</summary>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.GPS.Position.LongitudeString">
+            <summary>A string representing the longitude, in the format ddmm.mmmm H, where dd = degrees, mm.mmm = minutes and fractional minutes, and H = hemisphere (E/W).</summary>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.GPS.Position.SpeedKnots">
+            <summary>Speed over the ground in knots.</summary>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.GPS.Position.CourseDegrees">
+            <summary>Course over the ground in degrees.</summary>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.GPS.Position.FixTimeUtc">
+            <summary>The Universal Coordinated Time (UTC) time of the fix.</summary>
+        </member>
+    </members>
+</doc>

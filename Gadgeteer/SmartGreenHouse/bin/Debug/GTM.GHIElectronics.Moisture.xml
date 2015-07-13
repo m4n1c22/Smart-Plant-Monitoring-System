@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GTM.GHIElectronics.Moisture</name>
+    </assembly>
+    <members>
+        <member name="T:Gadgeteer.Modules.GHIElectronics.Moisture">
+            <summary>A Moisture module for Microsoft .NET Gadgeteer</summary>
+        </member>
+        <member name="M:Gadgeteer.Modules.GHIElectronics.Moisture.#ctor(System.Int32)">
+            <summary>Constructs a new instance.</summary>
+            <param name="socketNumber">The socket that this module is plugged in to.</param>
+        </member>
+        <member name="M:Gadgeteer.Modules.GHIElectronics.Moisture.ReadMoisture">
+            <summary>The moisture reading from the sensor.</summary>
+            <returns>A value where 0 is fully dry and 1000 (or greater) is completely wet.</returns>
+        </member>
+        <member name="P:Gadgeteer.Modules.GHIElectronics.Moisture.Enabled">
+            <summary>Turns sensor on and off.</summary>
+        </member>
+    </members>
+</doc>
