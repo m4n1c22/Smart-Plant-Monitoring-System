@@ -1,1 +1,1 @@
-# SmartGreenHouse
+# Smart Plant Monitoring System
